@@ -1,12 +1,7 @@
-document.querySelector('#buttonAddChild').addEventListener('click', function(){addPersonagemtela();});
+document.querySelector('#buttonAddChild').addEventListener('click', function (){battle();});
 
 var addPersonagemtela = function(){
-    var novoPersonagem = gerarPersonagem();
-    var novaDiv = document.createElement('div');
-    var conteudoDiv = document.createTextNode('\n\nNome: '+novoPersonagem.nome+'\nForca: '+novoPersonagem.strength+'\nArmadura'+novoPersonagem.armor+'\nResistência: '+novoPersonagem.resistance+'\nHP: '+novoPersonagem.health);
-        
-    document.querySelector('.main').appendChild(novaDiv);
-    novaDiv.appendChild(conteudoDiv);
+    var novoPersonagem = battle();
 }
 
 var gerarPersonagem = function (){
@@ -69,17 +64,40 @@ var battle = function(){
             var result = attack(char1.strength, char2.armor);
             char2.health -= result;
             turn = 'char2';
+            
+            var novaDiv = document.createElement('div');
+            var conteudoDiv = document.createTextNode(char1.nome+' dano: '+result);
+
+            document.querySelector('.main').appendChild(novaDiv);
+            novaDiv.appendChild(conteudoDiv);
+            
         }
         if(turn == 'char2'){
             var result = attack(char2.strength, char1.armor);
             char1.health -= result;
             turn = 'char1';
+            
+            var novaDiv = document.createElement('div');
+            var conteudoDiv = document.createTextNode(char2.nome+' dano: '+result);
+
+            document.querySelector('.main').appendChild(novaDiv);
+            novaDiv.appendChild(conteudoDiv);
         }
     }
     if(char1.health <= 0){
+        var novaDiv = document.createElement('div');
+        var conteudoDiv = document.createTextNode(char2.nome+' venceu!! Vida: '+char2.health);
+
+        document.querySelector('.main').appendChild(novaDiv);
+        novaDiv.appendChild(conteudoDiv);
         return "vencedor "+char2.nome;
     }
     if(char2.health <= 0){
+        var novaDiv = document.createElement('div');
+        var conteudoDiv = document.createTextNode(char1.nome+' venceu!! Vida: '+char1.health);
+
+        document.querySelector('.main').appendChild(novaDiv);
+        novaDiv.appendChild(conteudoDiv);
         return "vencedor "+char1.nome;
         
     }
