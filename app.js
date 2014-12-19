@@ -72,7 +72,7 @@ var battle = function(){
             novaDiv.appendChild(conteudoDiv);
             
         }
-        if(turn == 'char2'){
+        else{
             var result = attack(char2.strength, char1.armor);
             char1.health -= result;
             turn = 'char1';
