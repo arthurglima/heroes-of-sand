@@ -1,3 +1,13 @@
+document.querySelector('#buttonAddChild').addEventListener('click', function(){addPersonagemtela();});
+
+var addPersonagemtela = function(){
+    var novoPersonagem = gerarPersonagem();
+    var novaDiv = document.createElement('div');
+    var conteudoDiv = document.createTextNode('\n\nNome: '+novoPersonagem.nome+'\nForca: '+novoPersonagem.strength+'\nArmadura'+novoPersonagem.armor+'\nResistência: '+novoPersonagem.resistance+'\nHP: '+novoPersonagem.health);
+        
+    document.querySelector('.main').appendChild(novaDiv);
+    novaDiv.appendChild(conteudoDiv);
+}
 
 var gerarPersonagem = function (){
     var obj = new Object();
@@ -51,9 +61,7 @@ var battle = function(){
             return damage - defense;
         }
         return 0;
-    }
-    
-    
+    }  
     
     var turn = 'char1';
     while(char1.health >= 0 && char2.health >= 0){
