@@ -1,20 +1,41 @@
-var char1 = new Object();
-char1.name = '';
-char1.strength = Math.ceil(Math.random()*5);
-char1.armor = Math.ceil(Math.random()*5);
-char1.resistance = Math.ceil(Math.random()*5);
-char1.health = char1.resistance*5;
 
-var char2 = new Object();
-char2.name = '';
-char2.strength = Math.ceil(Math.random()*5);
-char2.armor = Math.ceil(Math.random()*5);
-char2.resistance = Math.ceil(Math.random()*5);
-char2.health = char2.resistance*5;
+var gerarPersonagem = function (){
+    var obj = new Object();
+    var numPontos = 10;
+    var valido = false;
+    
+    do{
+        obj.nome = prompt("Nome Personagem");
+    }while(obj.nome === null);
+    do{
+        numPontos = 10;
+        do{
+            obj.strength = parseInt(prompt("Valor força"));
+        }while( parseInt(obj.strength)>5 || obj.strength===null);
+        numPontos -= obj.strength;
 
+        do{
+            obj.resistance = parseInt(prompt("Valor resistance: \nrestam: "+numPontos));
+        }while( parseInt(obj.resistance)>5 || ( (numPontos-parseInt(obj.resistance)) <= 0 ) || obj.strength===null);    
+        numPontos -= obj.resistance;
+
+        do{
+            obj.armor = parseInt(prompt("Valor armadura: \nrestam: "+numPontos));
+        }while(obj.armor>5 || ( (numPontos-parseInt(obj.armor)) < 0 ) || obj.strength===null );
+        numPontos -= obj.armor;
+        
+    }while(numPontos != 0);
+    obj.health = parseInt(obj.resistance * 5);
+    
+    return obj; 
+}
 
 var battle = function(){
     'use strict';
+    var char1 = gerarPersonagem();
+    var char2 = gerarPersonagem();
+    
+    
     var attack = function (strength, armor) {
         var damage = 0,
             defense = 0,
@@ -31,6 +52,9 @@ var battle = function(){
         }
         return 0;
     }
+    
+    
+    
     var turn = 'char1';
     while(char1.health >= 0 && char2.health >= 0){
         if(turn == 'char1'){
@@ -45,22 +69,23 @@ var battle = function(){
         }
     }
     if(char1.health <= 0){
-        return "char2";
+        return "vencedor "+char2.nome;
     }
     if(char2.health <= 0){
-        return "char1";
+        return "vencedor "+char1.nome;
+        
     }
 }
 
 
 /*exerc. 2
-var battle = function (forca, armadura){
-	if (typeof(forca)!="number" || typeof(armadura)!="number"){
+var battle = function (strength, armor){
+	if (typeof(strength)!="number" || typeof(armor)!="number"){
 		alert("Valores devem ser inteiros");
 		return null;
 	}
 	
-	if(forca > armadura){
+	if(strength > armor){
 		return 'First';
 	}else{
 		return 'Second';
